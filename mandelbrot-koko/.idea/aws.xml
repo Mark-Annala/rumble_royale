@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="accountSettings">
+    <option name="activeProfile" value="profile:524318356732" />
+    <option name="activeRegion" value="eu-north-1" />
+    <option name="recentlyUsedProfiles">
+      <list>
+        <option value="profile:524318356732" />
+        <option value="profile:" />
+        <option value="profile:521960363265_Dev" />
+      </list>
+    </option>
+    <option name="recentlyUsedRegions">
+      <list>
+        <option value="eu-north-1" />
+        <option value="us-east-1" />
+      </list>
+    </option>
+  </component>
+  <component name="explorerToolWindow">
+    <option name="selectedTab" value="Amazon Q + CodeWhisperer" />
+  </component>
+</project>

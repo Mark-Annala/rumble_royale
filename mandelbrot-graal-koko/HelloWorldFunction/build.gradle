@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
+    implementation 'com.formkiq:lambda-runtime-graalvm:1.1'
+    implementation 'org.slf4j:slf4j-simple:1.7.26'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.formkiq.lambda.runtime.graalvm.LambdaRuntime'
+    }
+}
+
+task buildGraalVMImage {
+    inputs.files("${project.projectDir}/src/main", configurations.compileClasspath)
+    outputs.upToDateWhen {file("${buildDir}/graalvm/server").exists()}
+    outputs.file file("${buildDir}/graalvm/server")
+
+    doLast {
+        exec {
+            commandLine "bash", "-c", "./build_graalvm.sh"
+        }
+    }
+}
+
+buildGraalVMImage.dependsOn shadowJar, test
+build.dependsOn buildGraalVMImage
+sourceCompatibility = 21
+targetCompatibility = 21
