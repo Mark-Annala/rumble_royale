@@ -1,0 +1,9 @@
+[
+  {
+    "name": "mandelbrot_graal.App",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  }
+]
