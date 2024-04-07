@@ -1,0 +1,7 @@
+*.idea/
+*.DS_Store
+*.aws-sam/
+*.gradle/
+*lambda.zip
+*.class
+*build/
