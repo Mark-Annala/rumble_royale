@@ -22,19 +22,19 @@ jar {
     }
 }
 
-task buildGraalVMImage {
-    inputs.files("${project.projectDir}/src/main", configurations.compileClasspath)
-    outputs.upToDateWhen {file("${buildDir}/graalvm/server").exists()}
-    outputs.file file("${buildDir}/graalvm/server")
+//task buildGraalVMImage {
+//    inputs.files("${project.projectDir}/src/main", configurations.compileClasspath)
+//    outputs.upToDateWhen {file("${buildDir}/graalvm/server").exists()}
+//    outputs.file file("${buildDir}/graalvm/server")
+//
+//    doLast {
+//        exec {
+//            commandLine "bash", "-c", "./build_graalvm.sh"
+//        }
+//    }
+//}
 
-    doLast {
-        exec {
-            commandLine "bash", "-c", "./build_graalvm.sh"
-        }
-    }
-}
-
-buildGraalVMImage.dependsOn shadowJar, test
-build.dependsOn buildGraalVMImage
+//buildGraalVMImage.dependsOn shadowJar, test
+//build.dependsOn buildGraalVMImage
 sourceCompatibility = 21
 targetCompatibility = 21

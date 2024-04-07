@@ -1,34 +1,13 @@
-# Stage 1: Use the GraalVM image to build the native binary
-FROM ghcr.io/graalvm/graalvm-ce:21 AS builder
-
+FROM ubuntu:latest
 WORKDIR /working
-
-# Install native-image
-RUN /usr/lib/jvm/graalvm-ce-21/bin/gu install native-image
-
-# Build the native binary
-COPY . .
-
-RUN native-image --enable-url-protocols=http,https \
-    -H:ReflectionConfigurationFiles=/working/src/main/resources/reflect.json \
-    -H:+ReportUnsupportedElementsAtRuntime --no-server -jar "/working/build/libs/HelloWorldFunction-all.jar" \
-    && cp HelloWorldFunction-all /working/build/graalvm/server
-
-# Stage 2: Use a lightweight image to copy the built native binary
-FROM alpine:latest
-
-WORKDIR /app
-
-# Copy the built native binary from the builder stage
-COPY --from=builder /working/build/graalvm/server /app/server
-
-# Create a directory for graalvm build
-RUN mkdir -p /build/graalvm
-
-# Check if the server binary exists
-RUN if [ ! -f "/app/server" ]; then \
-        echo "There was an error building graalvm image"; \
-        exit 1; \
-    fi
-
-CMD ["echo", "GraalVM image with native binary built successfully."]
+COPY build/libs/HelloWorldFunction-all.jar HelloWorldFunction-all.jar
+COPY src/main/resources/reflect.json reflect.json
+RUN apt update -y && apt upgrade -y
+RUN apt install wget -y
+RUN apt install gcc -y
+RUN wget https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-x64_bin.tar.gz
+RUN tar -xvzf graalvm-jdk-22_linux-x64_bin.tar.gz
+RUN graalvm-jdk-22+36.1/bin/native-image --enable-url-protocols=http,https \
+                                             -H:ReflectionConfigurationFiles=reflect.json \
+                                             -H:+ReportUnsupportedElementsAtRuntime --no-server -jar "HelloWorldFunction-all.jar" \
+                                             && cp HelloWorldFunction-all /working/build/graalvm/server
