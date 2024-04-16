@@ -25,8 +25,7 @@
           <source>22</source>
           <target>22</target>
           <encoding>UTF-8</encoding>
-          <compilerArgs>
-            <compilerArg>--enable-preview</compilerArg>
+          <compilerArgs>--enable-preview
           </compilerArgs>
         </configuration>
       </plugin>

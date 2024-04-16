@@ -1,12 +1,6 @@
 package com.omegapoint.patternmatching.model;
 
-public final class Car implements Vehicle{
-    public final int passengers;
-
-    public Car(int passengers) {
-        this.passengers = passengers;
-    }
-
+public record Car(int passengers) implements Vehicle {
     public Car() {
         this(0);
     }
